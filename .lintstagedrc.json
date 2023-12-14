@@ -2,7 +2,11 @@
   "*.ts": ["prettier --write", "eslint"],
   "*.tsx": ["prettier --write", "eslint"],
   "*.js": ["prettier --write", "eslint"],
+  "*.jsx": ["prettier --write", "eslint"],
   "*.html": ["eslint", "prettier --write"],
   "*.json": ["prettier --write"],
-  "*.scss": ["stylelint", "prettier --write"]
+  "*.css": ["stylelint", "prettier --write"],
+  "*.scss": ["stylelint", "prettier --write"],
+  "*.less": ["stylelint", "prettier --write"],
+  "*.sass": ["stylelint", "prettier --write"]
 }
