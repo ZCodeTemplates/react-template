@@ -4,8 +4,6 @@ import "./App.css"
 
 const App = () => {
   const [count, setCount] = useState(0)
-  const [countas, setCountasd] = useState(0)
-
   return (
     <>
       <div>
