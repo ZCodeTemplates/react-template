@@ -6,7 +6,7 @@ module.exports = {
   importOrder: [
     "^react$",
     "<THIRD_PARTY_MODULES>",
-    "^./(.*)(?<!.css)$",
+    "^.*(?<!\\.less|scss|sass|css)$",
     "^(.*?).(css|scss|sass|less)",
   ],
   semi: false,
