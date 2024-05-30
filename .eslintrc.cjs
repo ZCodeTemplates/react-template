@@ -18,6 +18,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "import/prefer-default-export": 'off',
     "import/order": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",

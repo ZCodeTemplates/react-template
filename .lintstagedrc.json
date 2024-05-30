@@ -5,8 +5,8 @@
   "*.jsx": ["prettier --write", "eslint"],
   "*.html": ["eslint", "prettier --write"],
   "*.json": ["prettier --write"],
-  "*.css": ["stylelint", "prettier --write"],
-  "*.scss": ["stylelint", "prettier --write"],
-  "*.less": ["stylelint", "prettier --write"],
-  "*.sass": ["stylelint", "prettier --write"]
+  "*.css": ["prettier --write"],
+  "*.scss": ["prettier --write"],
+  "*.less": ["prettier --write"],
+  "*.sass": ["prettier --write"]
 }
