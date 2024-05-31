@@ -12,24 +12,15 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parserOptions: { ecmaVersion: "latest", sourceType: "module" },
   settings: { react: { version: "18.2" } },
-  plugins: ["react", "react-refresh", "import", "jsx-a11y", "restrict-imports"],
+  plugins: ["react", "react-refresh", "import", "jsx-a11y", "best-practices"],
   rules: {
-    "restrict-imports/restrict-imports": "error",
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
+    "best-practices/feature-folder-imports": "error",
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "import/prefer-default-export": "off",
     "import/order": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-props-no-spreading": "off",
-    // "import/no-internal-modules": [
-    //   "error",
-    //   {
-    //     allow: ["*/*"],
-    //   },
-    // ],
   },
 }
