@@ -49,11 +49,14 @@ module.exports = {
 
         const isImportWithinTheSameFeature = fileFeatureName === importFeatureName
 
+        if (!importFeatureName) {
+          return
+        }
+
         if (isOutsideOfFeatureFolder && !isImportFromFeatureIndex) {
           context.report({
             node,
-            message:
-              "Ensure imports from different features are made exclusively through their respective 'index.js' files.",
+            message: "Ensure imports from features are made exclusively through their respective 'index.js' files.",
           })
         } else if (isImportWithinTheSameFeature && isImportFromIndexFile) {
           context.report({
