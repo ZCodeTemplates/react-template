@@ -39,25 +39,34 @@ module.exports = {
           ImportDeclaration(node) {
             const initialImportPath = node.source.value // The path of the imported module
             const importPath = getFullImportPath(initialImportPath, context)
-            const filePath = context.getFilename() // The absolute path of the file containing the import statement
+            const filePath = context.filename // The absolute path of the file containing the import statement
 
-            // Regular expression to extract the feature name from the file path
+            const fileFeatureName = extractFeatureName(filePath)
+            const importFeatureName = extractFeatureName(importPath)
 
-            const fileFeatureMatch = extractFeatureName(filePath)
-            const importFeatureMatch = extractFeatureName(importPath)
-
-            if (!fileFeatureMatch || !importFeatureMatch) {
-              return
-            }
-
-            const fileFeatureName = fileFeatureMatch // Feature name where the file is located
-            const importFeatureName = importFeatureMatch // Feature name of the import path
-
-            const isImportWithinTheSameFeature =
-              fileFeatureName === importFeatureName
             const isImportFromIndexFile =
               importPath.endsWith("index") ||
               importPath.endsWith(importFeatureName)
+
+            const isOutsideOfFeatureFolder = !fileFeatureName
+            const isImportFromFeatureIndex =
+              importFeatureName && isImportFromIndexFile
+
+            const isImportWithinTheSameFeature =
+              fileFeatureName === importFeatureName
+
+            if (
+              isOutsideOfFeatureFolder &&
+              !isImportFromFeatureIndex &&
+              importFeatureName
+            ) {
+              context.report({
+                node,
+                message:
+                  "Avoid importing from the 'index.js' within the same feature. Directly import the specific modules to prevent circular dependencies and maintain modularity.",
+              })
+              return
+            }
 
             if (isImportWithinTheSameFeature && isImportFromIndexFile) {
               context.report({
@@ -81,3 +90,12 @@ module.exports = {
     },
   },
 }
+
+/*
+isInFeatureFolder
+
+
+
+
+
+ */
