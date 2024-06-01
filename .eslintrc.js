@@ -14,7 +14,7 @@ module.exports = {
   settings: { react: { version: "18.2" } },
   plugins: ["react", "react-refresh", "import", "jsx-a11y", "best-practices"],
   rules: {
-    "best-practices/feature-folder-imports": "error",
+    "best-practices/feature-folder-imports": ["error"],
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "import/prefer-default-export": "off",
     "import/order": "off",

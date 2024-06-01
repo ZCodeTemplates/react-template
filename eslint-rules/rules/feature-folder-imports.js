@@ -1,9 +1,10 @@
 const path = require("node:path")
 
-function extractFeatureName(filePath) {
+const FEATURE_AND_GROUPS_REGEX_PATTERN = /\/features(?:\/\([^)]+\))*\/([^/]+)/
+
+function extractFeatureName(filePath, regex) {
   const normalizedPath = filePath.replace(/\\/g, "/")
-  const featureRegex = /\/features\/([^/]+)(\/|$)/
-  const match = normalizedPath.match(featureRegex)
+  const match = normalizedPath.match(regex)
 
   return match ? match[1] : null
 }
@@ -31,16 +32,28 @@ module.exports = {
     description: "Enforce direct file imports within the same feature and index.js imports from outside the feature",
     category: "Best Practices",
     recommended: true,
-    schema: [], // This rule does not accept any options
+    schema: [
+      {
+        type: "object",
+        properties: {
+          featureRegex: {
+            type: "object",
+          },
+        },
+      },
+    ],
   },
   create(context) {
     return {
       ImportDeclaration(node) {
+        const { options = [] } = context
+        const { featureRegex = FEATURE_AND_GROUPS_REGEX_PATTERN } = options.at(0) || {}
+
         const importPath = getFullImportPath(node, context)
         const filePath = context.filename
 
-        const fileFeatureName = extractFeatureName(filePath)
-        const importFeatureName = extractFeatureName(importPath)
+        const fileFeatureName = extractFeatureName(filePath, featureRegex)
+        const importFeatureName = extractFeatureName(importPath, featureRegex)
 
         const isImportFromIndexFile = checkIfImportIsFromIndexFile(importPath, importFeatureName)
 

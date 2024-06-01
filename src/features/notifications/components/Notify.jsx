@@ -1,8 +1,6 @@
 import React from "react"
-import { SignupSignup } from "../../authentication"
+import { SignupSignup } from "../../(auth)/authentication"
 
-function Notify() {
+export default function Notify() {
   return <SignupSignup />
 }
-
-export default Notify
