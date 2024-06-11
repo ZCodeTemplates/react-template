@@ -1,4 +1,4 @@
-import { Query } from "./useFetchQuery.types"
+import { _useFetchQuery } from "./useFetchQuery.types"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 const defaultOnReject = (err: $TSFixMe, initialData: $TSFixMe) => {
@@ -45,7 +45,7 @@ export default function useFetchQuery<Res, Initial>({
 
   const { data: queryData = initialData } = queryFields
 
-  type QueryType = Query<Res, Initial, typeof setDataAndCache>
+  type QueryType = _useFetchQuery.Query<Res, Initial, typeof setDataAndCache>
 
   return {
     ...queryFields,

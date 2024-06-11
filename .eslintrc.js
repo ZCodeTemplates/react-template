@@ -24,6 +24,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "react", "react-refresh", "import", "jsx-a11y", "best-practices"],
   rules: {
     "best-practices/feature-folder-imports": ["error"],
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "import/prefer-default-export": "off",

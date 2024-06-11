@@ -8,6 +8,7 @@ export default function App() {
     initialData: null,
   })
 
+  // eslint-disable-next-line no-console
   console.log(data)
 
   return <div>hello</div>
