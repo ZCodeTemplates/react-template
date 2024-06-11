@@ -1,18 +1,55 @@
-import { useEffect, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { Query } from "./useFetchQuery.types"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
-const SUCCESS_STATUS = "success"
+const defaultOnReject = (err: $TSFixMe, initialData: $TSFixMe) => {
+  // eslint-disable-next-line no-console
+  console.log(err)
+  return initialData
+}
 
-export default function useFetchQuery(queryOptions, initialData) {
-  const queryData = useQuery({ ...queryOptions, initialData })
-  const { status, data } = queryData
-  const [state, setState] = useState(data)
+const defaultOnSuccess = (res: $TSFixMe) => res
 
-  useEffect(() => {
-    if (status === SUCCESS_STATUS) {
-      setState(data)
-    }
-  }, [status, data])
+type Params<Res, Initial> = {
+  queryParams: {
+    queryFn: () => Promise<Res>
+    queryKey: string[]
+    [key: string]: $TSFixMe
+  }
+  initialData: Initial
+  onSuccess?: (res: Res) => Res
+  onReject?: (res: Res, initialData: Initial) => Initial
+}
 
-  return { ...queryData, data: state }
+export default function useFetchQuery<Res, Initial>({
+  queryParams,
+  initialData,
+  onSuccess = defaultOnSuccess,
+  onReject = defaultOnReject,
+}: Params<Res, Initial>) {
+  const queryClient = useQueryClient()
+  const { queryKey, queryFn } = queryParams
+  const wrappedQueryFn = () =>
+    queryFn()
+      .then(onSuccess)
+      .catch((err) => onReject(err, initialData))
+
+  const setDataAndCache = (cb: (prevState: Res | Initial) => never) => {
+    const cbWithInitialData = (prevState: Res | Initial = initialData) => cb(prevState)
+    queryClient.setQueryData(queryKey, cbWithInitialData)
+  }
+
+  const queryFields = useQuery({
+    ...queryParams,
+    queryFn: wrappedQueryFn,
+  })
+
+  const { data: queryData = initialData } = queryFields
+
+  type QueryType = Query<Res, Initial, typeof setDataAndCache>
+
+  return {
+    ...queryFields,
+    data: queryData,
+    setData: setDataAndCache,
+  } satisfies QueryType
 }
