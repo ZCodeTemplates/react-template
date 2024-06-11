@@ -1,5 +1,6 @@
 import React from "react"
 import App from "./App"
+import AppContext from "./common/context/AppContext"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import ReactDOM from "react-dom/client"
@@ -14,7 +15,9 @@ ReactDOM.createRoot(rootEl).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <App />
+      <AppContext>
+        <App />
+      </AppContext>
     </QueryClientProvider>
   </React.StrictMode>
 )
