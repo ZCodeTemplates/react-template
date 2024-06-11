@@ -1,4 +1,4 @@
-import useFetchQuery from "./common/hooks/useFetchQuery"
+import useFetchQuery from "./common/hooks/useFetchQuery/useFetchQuery"
 import { api } from "./common/services/api"
 import "./App.module.less"
 
